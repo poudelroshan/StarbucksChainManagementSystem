@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/iamroshanpoudel/StarBucksManagementSystem/issues"
   },
-  "homepage": "https://github.com/iamroshanpoudel/StarBucksManagementSystem#readme"
+  "homepage": "https://github.com/iamroshanpoudel/StarBucksManagementSystem#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
