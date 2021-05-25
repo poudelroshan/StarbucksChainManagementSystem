@@ -1,0 +1,67 @@
+main#info {
+    background: color(light);
+    height: 60vh;
+    @include desktop {
+        height: 40vh;   
+    }
+
+    .info-title {
+        color: color(primary);
+        text-transform: capitalize;
+        text-align: center;
+        padding: 20px 5px;
+        font-size: 2.25rem;
+        position: relative;
+        
+        @include desktop {
+            font-size: 2.5rem;
+        }
+        @include tablet {
+            right: 40px;        
+        }
+    }
+
+    .box-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+        top: 20px;
+        @include desktop {
+            top: 10px;
+        }
+        @include tablet {
+            right: 40px;        
+        }
+        .box {
+            flex-basis: ($containerWidth / 3);
+            text-align: center;
+            padding: 0 10px;
+            
+            .box-icon {
+                padding: 5px;
+                color: lighten(color(primary), 20%);
+            }
+
+            .box-title {
+                color: color(dark);
+                font-size: 1.5rem;
+                @include desktop {
+                    font-size: 1.75rem;
+                }
+            }
+            .box-text {
+                font-size:1.1rem;
+                line-height:1.15em;
+                width:80%;
+                margin:0 auto;
+            }
+            @include desktop {
+                .box-text {
+                    font-size: 1.3rem;
+                    line-height:1.2em;
+                }
+            }
+        }
+    }
+}

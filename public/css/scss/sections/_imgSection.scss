@@ -1,0 +1,48 @@
+.img-section {
+    height: 25vh;
+    width: 100vw;
+    background: url("../img/sectionBg.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include desktop {
+        height: 17.5vh;
+    }
+    .section-container {
+        width: 50vw;
+        margin: 0 auto;
+        position: relative;
+        @include tablet {
+            right:40px;
+        }
+        .section-title {
+            color: #fff;
+            text-align: center;
+            font-size: 2rem;
+            padding: 2rem 0.5rem 1rem 0.5rem;
+            text-transform: capitalize;
+        }
+
+        .icon-list {
+            display: flex;
+            justify-content: center;
+            padding: .25rem;
+            list-style-type: none;
+
+            .icon-item {
+                padding:0.5rem .75rem;
+
+                .icon-link {
+                    color:#fff;
+                    text-decoration: none;
+                    transition: color .2s ease-in-out;
+
+                    &:hover {
+                        color: lighten(color(primary), 10%);
+                    }
+                }
+            }
+        }
+    }
+}

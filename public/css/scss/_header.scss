@@ -1,0 +1,172 @@
+.header {
+    background: $headerBackground;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100vw;
+    
+    // Responsive Nav Styles
+    .navSection {
+        background-color: darken(color(dark), 35%);
+        height: 60vh;
+        width: 100%;
+        position: absolute;
+        top:0;
+        left:0;
+        z-index:2;
+    }
+
+    nav {
+        width: 100%;
+        height: 15vh;
+
+        #navbarBar {
+            display: none;
+            float:right;
+            position: relative;
+            right:10vw;
+            color: white;
+            background: transparent;
+            border:0;
+            line-height: 15vh;
+            z-index:3;
+
+            @include mobile {
+                display: block;
+            }
+        }
+        .nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            position: relative;
+
+            @include tablet {
+             right: 40px;    
+            }
+            @include mobile {
+                display: block;
+            }
+            .nav-item {
+                line-height: 15vh;
+                padding: $paddingTB $paddingLR;
+                @include tablet {
+                    padding: $paddingTBs $paddingLRs;
+                }
+                @include mobile {
+                    &:not(.nav-img-item) {
+                        display: none;
+                    }
+                }
+                
+                .nav-link {
+                    color: white;
+                    text-decoration: none;
+                    font-family: 'Roboto Condensed', sans-serif;
+                    font-size: 1.25rem;
+                    @include desktop {
+                        font-size: 1.5rem;
+                    }
+
+                    &:hover {
+                        color: lighten(color(primary), 10%);
+                    }
+
+                    .nav-img {
+                        width: 150px;
+                        height: 150px;
+                        position: relative;
+
+                        @include mobile {
+                            float:left;
+                            width: 100px;
+                            height: 100px;
+                            left: 10vw;
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    .header-content {
+        position: relative;
+        top: 25vh;
+        text-align: center;
+        background: rgba(0,0,0,0.1);
+        width: 55vw;
+        padding: 5px;
+        margin: 0 auto;
+        @include tablet {
+            right:50px;        
+        }
+
+        .header-text {
+            color: #fff;
+            text-transform: capitalize;
+
+            &.large {
+                font-size: 2.1rem;  
+                @include desktop {
+                    font-size: 2.5rem;
+                }   
+
+            }
+            &.small {
+                font-weight: lighter;
+                @include desktop {
+                    font-size:1.8em;
+                }
+            }
+        }
+    }
+    #headerArrow {
+        position: absolute;
+        bottom: 10px;
+        left: 48.5vw;
+        text-align: center;
+        color: #fff;
+        text-decoration: none;
+        transition: .2s ease-in-out;
+        @include tablet {
+         left:45vw;        
+        }
+        &:hover {
+            color: color(primary);
+        }
+    }
+}
+.header2 {
+    height: 72.5vh;
+    width: 100vw;
+    background: #f1f1f1;
+
+    .header-img, .header-img-1 {
+        width: 40vw;
+        float:right;
+    }
+    .header-img {
+        padding: 15vh 8vw 0 0;
+    }
+    .header-img-1 {
+        padding: 10vh 8vw 0 0;
+    }
+    .header-img3 {
+        float:right;
+        position:relative;
+        right: 16.5vw;
+        top:5vh;
+        width:30vw;
+    }
+    .header-text {
+        text-align:left;
+        padding: 15vh 15vw;
+        text-transform: uppercase;
+        font-size: 3.5rem;
+        float:left;
+        width: 40vw;
+        position:absolute;
+        font-weight: 700;
+        color: darken(color(primary), 3%);
+        letter-spacing: 2px;
+    }
+}

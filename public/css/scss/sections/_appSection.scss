@@ -1,0 +1,30 @@
+.app-section {
+    background: #e5e5e5;
+
+    .section-title {
+        text-align:center;
+        color: color(primary);
+        font-size: 2rem;
+        padding: .5em;
+        text-transform:capitalize;
+    }
+
+    .section-content {
+        font-size: 1.5rem;
+        font-weight: lighter;
+        color: color(dark);
+        width:62.5%;
+        margin:0 auto;
+    }
+
+    .section-btn {
+        color:lighten(color(primary), 5%);
+        background: transparent;
+        margin-left: ((100% - 62.5%) / 2);
+        width: 160px;
+        height:35px;
+        border-radius: 20px;
+        font-size: 1.05rem;
+        border: 1px solid lighten(color(primary), 5%);
+    }
+}

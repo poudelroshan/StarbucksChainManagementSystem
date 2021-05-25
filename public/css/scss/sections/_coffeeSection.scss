@@ -1,0 +1,34 @@
+.coffee-section {
+    width:70vw;
+    margin-left:15vw;
+    
+    .coffee-section-title {
+        color: darken(color(dark), 17.5%);
+        padding:1em;
+        padding-left:0;
+        font-size:2rem;
+    }
+
+    .coffee-list {
+        list-style-type:none;
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 2em;
+    }
+
+    .coffee-item {
+
+        .coffee-sub-text {
+            color: color(dark);
+            text-transform: capitalize;
+        }
+        .coffee-title {
+            color: lighten(color(primary),5%);
+            cursor: pointer;
+            
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

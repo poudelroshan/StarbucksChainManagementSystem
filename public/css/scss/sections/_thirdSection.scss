@@ -1,0 +1,81 @@
+.third-section {
+    height: 55.3vh;
+    background: darken(color(light), 5%);
+    @include desktop {
+        height: 35vh;
+    }
+    @include tablet {
+        height: 49vh;   
+    }
+
+    .section-container {
+        display: flex;
+        position: relative;
+        left: 15vw;
+        top: 7.5vh;
+        justify-content: center;
+        width: 75vw;
+        @include desktop {
+            top:3.25vh;
+        }
+        @include tablet {
+            top: 4.5vh;
+            left: 9vw;
+        }
+        .section-img {
+            width:500px;
+            height:300px;
+            order:2;
+            @include tablet {
+                width:400px;
+                height:250px;
+                position: relative;
+                top: 70px;
+            }
+        }
+        .section-content {
+            width: 30vw;
+            color: color(dark);
+            @include desktop {
+                position: relative;
+                top:2.5rem;
+            }
+            @include tablet {
+                width: 35vw;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                color: lighten(color(primary), 10%);
+                @include tablet {
+                    font-size:1.75rem;
+                }
+            }
+            .section-text {
+                font-size: 1.5rem;
+                font-weight: lighter;
+                @include tablet {
+                    font-size:1.075rem;
+                }
+            }
+            .section-btn {
+                color: lighten(color(primary), 12.5%);
+                background: transparent;
+                width: 150px;
+                height: 50px;
+                border: 1px solid lighten(color(primary), 12.5%);
+                font-size: 1.1rem;
+                padding: 5px;
+                border-radius: 25px;
+                margin-top: 5px;
+                @include btnTransition;
+
+                &:hover {
+                    color: #fff;
+                    background-color: lighten(color(primary), 12.5%);
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.nav {
+    background: color(primary);
+    width:100vw;
+    height:75px;
+
+    .navbar-brand {
+        float:left;
+        padding-left:15vw;
+
+        .brand-image {
+            height: 65px;
+            width:70px;
+            padding: 5px;
+            float: left;
+        }
+
+        .brand-name {
+            color:#fff;
+            display:inline-block;
+            line-height:75px;
+            font-size: 1.5rem;
+            font-weight: normal;
+            text-transform: uppercase;
+            padding-left: 10px;
+            letter-spacing: 1px;
+        }
+    }
+    .navbar-list {
+        float:right;
+        list-style-type: none;
+        margin-right: 15vw;
+
+        .navbar-item {
+            float:left;
+            padding:5px 10px;
+            height:65px;
+            transition: background .2s ease-in-out;
+
+            &:hover {
+                background: lighten(color(primary), 5%);
+            }
+
+            .navbar-link {
+                color:white;
+                text-decoration: none;
+                font-size: 1.05rem;
+                text-transform: uppercase;
+                font-weight: normal;
+                line-height: 67.5px;
+                letter-spacing: 2.5px;
+                display:block;
+            }
+        }
+    }
+}

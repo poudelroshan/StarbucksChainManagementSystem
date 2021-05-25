@@ -1,0 +1,22 @@
+footer {
+    height: 8.5vh;
+    background-color: darken(color(dark), 25%);
+    @include desktop {
+        height: 6vh;
+    }
+    .footer-text {
+        color: white;
+        text-align: center;
+        font-size: 1rem;
+        line-height: 8.5vh;
+        position: relative;
+        
+        @include desktop {
+            padding:0.15rem;
+            line-height: 5.5vh;
+        }
+        @include tablet {
+            right: 40px;
+        }
+    }
+}

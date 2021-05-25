@@ -1,0 +1,153 @@
+<h1 class="menu-section-title">Coffee &amp; Espresso</h1>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/brewed_coffee.jpg"
+                    alt="Brewed Coffee" class="menu-img">
+                <h3 class="menu-title">Brewed Coffee</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/caffe_americano.jpg"
+                    alt="Caffè Americano" class="menu-img">
+                <h3 class="menu-title">Caffè Americano</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/caffe_latte.jpg"
+                    alt="Caffe Latte" class="menu-img">
+                <h3 class="menu-title">Caffè Latte</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/caffe_isto.jpg"
+                    alt="Caffè Misto" class="menu-img">
+                <h3 class="menu-title">Caffè Misto</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/caffe_mocha.jpg"
+                    alt="Caffè Mocha" class="menu-img">
+                <h3 class="menu-title">Caffè Mocha</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/SBX20080807_3256_1.jpg"
+                    alt="Cappuccino" class="menu-img">
+                <h3 class="menu-title">Cappuccino</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/Caramel%20Macchiato.jpg"
+                    alt="Caramel Macchiato" class="menu-img">
+                <h3 class="menu-title">Caramel Macchiato</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/caramel_mocha.jpg"
+                    alt="Caramel Mocha" class="menu-img">
+                <h3 class="menu-title">Caramel Mocha</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Promo/9.5-Autumn-2019/cinnamon-dolce-latte.png"
+                    alt="Cinnamon Dolce Latte" class="menu-img">
+                <h3 class="menu-title">Cinnamon Dolce Latte</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/espresso_shot.jpg"
+                    alt="Espresso" class="menu-img">
+                <h3 class="menu-title">Espresso</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/espresso_con_panna.jpg"
+                    alt="Espresso Con Panna" class="menu-img">
+                <h3 class="menu-title">Espresso Con Panna</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/espresso_macchiato.jpg"
+                    alt="Espresso Machiato" class="menu-img">
+                <h3 class="menu-title">Espresso Machiato</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/New-Website---Coffee/flatwhite-2-.jpg"
+                    alt="Flat White" class="menu-img">
+                <h3 class="menu-title">Flat White</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/White%20Chocolate%20Mocha.jpg"
+                    alt="White Chocolate Mocha" class="menu-img">
+                <h3 class="menu-title">White Chocolate Mocha</h3>
+            </div>
+        </div>
+        <br><br>
+        <hr>
+        <h1 class="menu-section-title">Tea &amp; Chocolate</h1>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Promo/9.5-Autumn-2019/duo-black-tea-honey-grapefruit.png"
+                    alt="Black Tea with Ruby Grapefruit and Honey" class="menu-img">
+                <h3 class="menu-title">Black Tea with Ruby Grapefruit &amp; Honey</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/New-Website---Coffee/caramelhotchoc-2-.jpg"
+                    alt="Caramel Signature Hot Chocolate" class="menu-img">
+                <h3 class="menu-title">Caramel Signature Hot Chocolate</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/sbx20160502-64911-pr.jpg"
+                    alt="Chai Tea" class="menu-img">
+                <h3 class="menu-title">Chai Tea</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/chat_tea_latte.jpg"
+                    alt="Chai Tea Latte" class="menu-img">
+                <h3 class="menu-title">Chai Tea Latte</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/classic_hot_chocolate.jpg"
+                    alt="Classic Hot Chocolate" class="menu-img">
+                <h3 class="menu-title">Classic Hot Chocolate</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/sbx20160502-64914-pr.jpg"
+                    alt="Earl Grey Tea" class="menu-img">
+                <h3 class="menu-title">Earl Grey Tea</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/sbx20160502-64916-pr.jpg"
+                    alt="Emperor's Coud and Mist Green Tea" class="menu-img">
+                <h3 class="menu-title">Emperor's Coud and Mist&reg; Green Tea</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Tea/MKI_7359.jpg"
+                    alt="English Breakfast Tea" class="menu-img">
+                <h3 class="menu-title">English Breakfast Tea</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/english_tea_latte.jpg"
+                    alt="English Breakfast Tea Latte" class="menu-img">
+                <h3 class="menu-title">English Breakfast Tea Latte</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/green_tea_latte.jpg"
+                    alt="Green Tea Latte" class="menu-img">
+                <h3 class="menu-title">Green Tea Latte</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/sbx20160502-64919-pr.jpg"
+                    alt="Mint Blend Herbal Infusion" class="menu-img">
+                <h3 class="menu-title">Mint Blend Herbal Infusion</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/signature_hot_chocolcate.jpg"
+                    alt="Signature Hot Chocolate" class="menu-img">
+                <h3 class="menu-title">Signature Hot Chocolate</h3>
+            </div>
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/white_hot_chocolate.jpg"
+                    alt="White Hot Chocolate" class="menu-img">
+                <h3 class="menu-title">White Hot Chocolate</h3>
+            </div>
+        </div>
+        <br><br>
+        <hr>
+        <h1 class="menu-section-title">Other Beverages</h1>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x288/_files/Beverages/steamed_milk.jpg"
+                    alt="Flavoured Steamed Milk" class="menu-img">
+                <h3 class="menu-title">Flavoured Steamed Milk</h3>
+            </div>
+        </div>
