@@ -24,15 +24,20 @@
 						</div>
 						<div class="card fat">
 							<div class="card-body">
+								<% if (err_msg) { %>
+								<div class="alert alert-danger" role="alert">
+									<%= err_msg %>
+								</div>
+								<% } %>
 								<h4 class="card-title">Login</h4>
 								<form method="POST" class="my-login-validation" action="/login">
 									<div class="form-group">
-										<label for="email">Administrative ID</label>
+										<label for="executive_id">Administrative ID</label>
 										<input
-											id="email"
+											id="executive_id"
 											type="text"
 											class="form-control"
-											name="email"
+											name="executive_id"
 											value=""
 											required
 											autofocus
