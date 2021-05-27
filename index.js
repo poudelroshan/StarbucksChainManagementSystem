@@ -4,6 +4,7 @@ const express = require("express"),
 	bodyParser = require("body-parser"),
 	session = require("express-session"),
 	path = require("path"),
+	sha1 = require("sha1"),
 	mysql = require("mysql"),
 	app = express(),
 	middlewareObj = require("./middleware");
@@ -15,9 +16,9 @@ app.use(express.static(__dirname + "/public"));
 
 // sql connection
 const conn = mysql.createConnection({
-	host: "localhost",
+	host: "34.141.141.50",
 	port: 3306,
-	user: "roshan",
+	user: "starbucks-admin",
 	password: "password",
 	database: "starbucks_project",
 });
@@ -26,7 +27,7 @@ conn.connect((err) => {
 	if (err) {
 		throw err;
 	} else {
-		console.log(`Connected to SQL database!!`);
+		console.log(`Connected to Google Cloud SQL database!!`);
 	}
 });
 
@@ -62,7 +63,7 @@ app.post("/login", (req, res) => {
 			const { login_pass, is_admin, chain_id, chain_name, phone_num, email } =
 				result[0];
 			console.log(result[0]);
-			if (login_pass == exec_pass) {
+			if (login_pass == sha1(exec_pass)) {
 				const user = {
 					executive_id: exec_id,
 					is_admin: is_admin,
@@ -84,9 +85,7 @@ app.post("/login", (req, res) => {
 });
 app.get("/login", (req, res) => {
 	console.log(req.body.err_msg);
-	if (req.session.loggedin === true) {
-		console.log("Redirect issue check:2", req.session.loggedin);
-
+	if (req.session.loggedin) {
 		res.redirect("/dashboard");
 	} else {
 		res.render("login.ejs", { err_msg: req.session.err_msg });
@@ -112,7 +111,18 @@ app.get("/inventory", middlewareObj.isLoggedIn, (req, res) => {
 	res.render("inventory.ejs");
 });
 app.get("/test", (req, res) => {
-	res.render("header.ejs");
+	const aaa = sha1("aaa"),
+		bbb = sha1("bbb"),
+		cc = sha1("cc"),
+		dd = sha1("dd"),
+		ee = sha1("ee");
+
+	const out = `aaa: ${aaa}\n
+				bbb: ${bbb}\n
+				cc: ${cc}\n
+				dd: ${dd}\n
+				ee: ${ee}`;
+	res.send(out);
 });
 
 app.get("/branch-menu", middlewareObj.isLoggedIn, (req, res) => {
