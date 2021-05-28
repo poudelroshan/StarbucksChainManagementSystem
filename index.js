@@ -1,9 +1,7 @@
 const { connect } = require("http2");
 
 const express = require("express"),
-	bodyParser = require("body-parser"),
 	session = require("express-session"),
-	path = require("path"),
 	sha1 = require("sha1"),
 	mysql = require("mysql"),
 	app = express(),
@@ -41,7 +39,13 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.set("view engine", "ejs");
 
+// global ejs variables
+app.use((req, res, next) => {
+	res.locals.user = req.session.user;
+	next();
+});
 // setting up Routes
 // const questionRoute = require("./routes/question"),
 // 	questionResponseRoute = require("./routes/questionResponse"),
@@ -55,14 +59,14 @@ app.get("/", (req, res) => {
 app.post("/login", (req, res) => {
 	const exec_id = req.body.executive_id;
 	const exec_pass = req.body.password;
-	const statement = `SELECT * FROM executive E, starbucks_chain S WHERE E.executive_id = ${exec_id} AND E.chain_id = S.chain_id`;
+	const statement = `SELECT * FROM executive E, starbucks_chain S WHERE E.executive_id = ${exec_id} 
+						AND E.chain_id = S.chain_id`;
 	conn.query(statement, (err, result) => {
 		if (err) {
 			req.session.err_msg = "Invalid administrative id";
 		} else {
 			const { login_pass, is_admin, chain_id, chain_name, phone_num, email } =
 				result[0];
-			console.log(result[0]);
 			if (login_pass == sha1(exec_pass)) {
 				const user = {
 					executive_id: exec_id,
@@ -98,7 +102,7 @@ app.get("/logout", middlewareObj.isLoggedIn, (req, res) => {
 });
 
 app.get("/dashboard", middlewareObj.isLoggedIn, (req, res) => {
-	res.render("dashboard.ejs", { user: req.session.user });
+	res.render("dashboard.ejs");
 });
 
 app.get("/menu", (req, res) => {
@@ -110,23 +114,28 @@ app.get("/employee", middlewareObj.isLoggedIn, (req, res) => {
 app.get("/inventory", middlewareObj.isLoggedIn, (req, res) => {
 	res.render("inventory.ejs");
 });
-app.get("/test", (req, res) => {
-	const aaa = sha1("aaa"),
-		bbb = sha1("bbb"),
-		cc = sha1("cc"),
-		dd = sha1("dd"),
-		ee = sha1("ee");
-
-	const out = `aaa: ${aaa}\n
-				bbb: ${bbb}\n
-				cc: ${cc}\n
-				dd: ${dd}\n
-				ee: ${ee}`;
-	res.send(out);
-});
 
 app.get("/branch-menu", middlewareObj.isLoggedIn, (req, res) => {
-	res.render("branch-menu.ejs");
+	const branch_id = req.session.user.chain_id;
+	const statement = `SELECT * FROM main_menu M WHERE M.item_id IN (SELECT item_id FROM chain_menu WHERE chain_id = ${branch_id})`;
+	conn.query(statement, (err, result) => {
+		if (err) {
+			req.session.branch_menu_err_msg =
+				"Error fetching menu information for given chain id";
+		}
+		const branchMenu = result;
+
+		// Find items not in branch menu
+		const statement2 = `SELECT * FROM main_menu M WHERE M.item_id NOT IN (SELECT item_id FROM chain_menu WHERE chain_id = ${branch_id})`;
+		conn.query(statement2, (err, result) => {
+			const notInBranchMenu = result;
+			res.render("branch-menu.ejs", {
+				branchMenu: branchMenu,
+				notInBranchMenu: notInBranchMenu,
+				branch_menu_err_msg: req.session.branch_menu_err_msg,
+			});
+		});
+	});
 });
 
 app.get("/review", middlewareObj.isLoggedIn, (req, res) => {
