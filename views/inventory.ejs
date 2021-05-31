@@ -127,7 +127,7 @@
 						data-toggle="dropdown"
 						aria-expanded="false"
 					>
-						Hello, User
+						Branch: <%= user.chain_name %>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<li><a class="dropdown-item" href="#">Settings</a></li>
@@ -287,201 +287,73 @@
 						<table class="table table-hover">
 							<thead>
 								<tr class="bg-success">
-									<th scope="col">Item ID</th>
-									<th scope="col">Item Name</th>
-									<th scope="col">Roast type</th>
+									<th scope="col">Supply ID</th>
+									<th scope="col">Supply Name</th>
 									<th scope="col">Image</th>
-									<th scope="col">Stock</th>
+									<th scope="col">Supplier</th>
+									<th scope="col">Inventory</th>
 									<th scope="col">Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<!-- <tr class="table-success"> -->
+								<% for (let i = 0; i < inventory.length; i++) { %>
 								<tr class="bg">
-									<th scope="row">12333</th>
-									<td>Starbucks&reg; Veranda blend</td>
-									<td><strong>Blonde</strong> Roast</td>
+									<td><%= inventory[i].supply_id%></td>
+									<td><%= inventory[i].supply_name%></td>
 									<td>
 										<img
-											src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/veranda-stamp.png"
-											alt="Starbucks Veranda Blend"
-											class="coffee-img"
+											src="<%= inventory[i].stock_url%>"
+											alt="item"
+											class="stock-img"
 										/>
 									</td>
-									<td>10</td>
+									<td><%= inventory[i].supplier_name %></td>
+									<td><%= inventory[i].inventory %></td>
 									<td>
-										<button type="button" class="btn btn-success">
+										<button
+											type="button"
+											class="btn btn-success"
+											onclick="restockSupply('<%= inventory[i].supply_id%>')"
+										>
 											Restock
 										</button>
 									</td>
 								</tr>
+								<% } %>
 							</tbody>
 						</table>
-						<ul class="coffee-list">
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/veranda-stamp.png"
-									alt="Starbucks Veranda Blend"
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Blonde</strong> Roast</span
-								>
-								<h3 class="coffee-title">Starbucks&reg; Veranda blend</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/willow-stamp.png"
-									alt="Starbucks Willow Blend"
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Blonde</strong> Roast</span
-								>
-								<h3 class="coffee-title">Starbucks&reg; Willow Blend</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/breakfast-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">Breakfast Blend</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/colombia-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">Colombia</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/ethiopia-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">Ethiopia</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/guatemala-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">Guatemala Antigua</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/house-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">House Blend</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/kenya-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">Kenya</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/pike-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"
-									><strong>Medium</strong> roast</span
-								>
-								<h3 class="coffee-title">Pike Place&reg; Roast</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/verona-s.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"><strong>dark</strong> roast</span>
-								<h3 class="coffee-title">Caffè Verona&reg;</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/komodo-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"><strong>dark</strong> roast</span>
-								<h3 class="coffee-title">Decaf Komodo Dragon Blend&trade;</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/espresso-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"><strong>dark</strong> roast</span>
-								<h3 class="coffee-title">Espresso Roast</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/french-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"><strong>dark</strong> roast</span>
-								<h3 class="coffee-title">French Roast</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/italianstamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"><strong>dark</strong> roast</span>
-								<h3 class="coffee-title">Italian Roast</h3>
-							</li>
-							<li class="coffee-item">
-								<img
-									src="https://assets.mystarbucks.com.au/imagecache/bestfit/288x166/_files/NEW-Photos-2016/Packaged-coffee/sumatra-stamp.png"
-									alt=""
-									class="coffee-img"
-								/>
-								<span class="coffee-sub-text"><strong>dark</strong> roast</span>
-								<h3 class="coffee-title">Sumatra</h3>
-							</li>
-						</ul>
 					</section>
 					<br />
-					<footer>
-						<p class="footer-text">
-							&copy; 2019 Starbucks Coffee Company. All rights reserved.
-						</p>
-					</footer>
 				</main>
 			</div>
 		</div>
+
+		<script>
+			//add to branch menu
+			const restockSupply = (supply_id) => {
+				fetch(`/api/inventory/${supply_id}`, {
+					method: "POST",
+				})
+					.then(function (response) {
+						// The API call was successful!
+						if (response.ok) {
+							window.location.reload();
+
+							return response.json();
+						} else {
+							return Promise.reject(response);
+						}
+					})
+					.then(function (data) {
+						// This is the JSON from our response
+						console.log(data);
+					})
+					.catch(function (err) {
+						// There was an error
+						console.warn("Something went wrong.", err);
+					});
+			};
+		</script>
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

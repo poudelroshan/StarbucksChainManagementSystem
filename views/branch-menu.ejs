@@ -6,6 +6,11 @@
 		<title>Starbucks Admin Dashboard</title>
 		<link
 			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+		/>
+
+		<link
+			rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
 			integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
 			crossorigin="anonymous"
@@ -310,7 +315,7 @@
 								</thead>
 								<tbody>
 									<% for (let i = 0; i < branchMenu.length; i++) { %>
-									<tr class="bg">
+									<tr class="bg" id="<%= branchMenu[i].item_id %>">
 										<td><%= branchMenu[i].item_id%></td>
 										<td><%= branchMenu[i].item_name%></td>
 										<td>
@@ -323,7 +328,11 @@
 										<td><%= branchMenu[i].item_size %></td>
 										<td><%= branchMenu[i].item_price %></td>
 										<td>
-											<button type="button" class="btn btn-danger">
+											<button
+												type="button"
+												class="btn btn-danger"
+												onclick="deleteFromMenu('<%= branchMenu[i].item_id %>')"
+											>
 												Remove from menu
 											</button>
 										</td>
@@ -362,12 +371,13 @@
 										<th scope="col">Image</th>
 										<th scope="col">Item size</th>
 										<th scope="col">Item Price</th>
+										<th scope="col">Is currently sold?</th>
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
 								<tbody>
 									<% for (let i = 0; i < notInBranchMenu.length; i++) { %>
-									<tr class="bg">
+									<tr class="bg" id="<%= notInBranchMenu[i].item_id %>">
 										<td><%= notInBranchMenu[i].item_id%></td>
 										<td><%= notInBranchMenu[i].item_name%></td>
 										<td>
@@ -380,9 +390,26 @@
 										<td><%= notInBranchMenu[i].item_size %></td>
 										<td><%= notInBranchMenu[i].item_price %></td>
 										<td>
-											<button type="button" class="btn btn-success">
+											<% if (notInBranchMenu[i].is_currently_sold === 1) { %>
+											<i class="bi bi-check fa-4x"></i>
+											<% } else{ %>
+											<i class="bi bi-x fa-4x"></i>
+											<% } %>
+										</td>
+										<td>
+											<% if (notInBranchMenu[i].is_currently_sold === 1) { %>
+											<button
+												type="button"
+												class="btn btn-success"
+												onclick="addToMenu('<%= notInBranchMenu[i].item_id %>')"
+											>
 												Add to branch menu
 											</button>
+											<% } else{ %>
+											<button type="button" class="btn btn-success disabled">
+												Add to branch menu
+											</button>
+											<% } %>
 										</td>
 									</tr>
 									<% } %>
@@ -432,6 +459,54 @@
 				} else {
 					x.style.display = "none";
 				}
+			};
+
+			//add to branch menu
+			const addToMenu = (item_id) => {
+				fetch(`/api/menu/${item_id}`, {
+					method: "POST",
+				})
+					.then(function (response) {
+						// The API call was successful!
+						if (response.ok) {
+							window.location.reload();
+
+							return response.json();
+						} else {
+							return Promise.reject(response);
+						}
+					})
+					.then(function (data) {
+						// This is the JSON from our response
+						console.log(data);
+					})
+					.catch(function (err) {
+						// There was an error
+						console.warn("Something went wrong.", err);
+					});
+			};
+
+			//Delete from branch menu
+			const deleteFromMenu = (item_id) => {
+				fetch(`/api/menu/${item_id}`, {
+					method: "DELETE",
+				})
+					.then(function (response) {
+						// The API call was successful!
+						if (response.ok) {
+							window.location.reload();
+							return response.json();
+						} else {
+							return Promise.reject(response);
+						}
+					})
+					.then(function (data) {
+						// This is the JSON from our response
+					})
+					.catch(function (err) {
+						// There was an error
+						console.warn("Something went wrong.", err);
+					});
 			};
 		</script>
 	</body>

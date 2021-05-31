@@ -72,6 +72,13 @@
 			.sidebar .nav-link.active {
 				color: #0d6efd;
 			}
+			.card {
+				background-color: #f8f9fa;
+				/* display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center; */
+			}
 		</style>
 	</head>
 
@@ -127,7 +134,7 @@
 						data-toggle="dropdown"
 						aria-expanded="false"
 					>
-						Hello, User
+						Branch: <%= user.chain_name %>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<li><a class="dropdown-item" href="#">Settings</a></li>
@@ -282,46 +289,117 @@
 				</nav>
 				<!-- Insert here the contents -->
 				<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
+					<h1>Current Employees on <%= user.chain_name %> branch:</h1>
+
 					<table class="table table-hover">
 						<thead>
 							<tr class="bg-success">
 								<th scope="col">Employee ID</th>
 								<th scope="col">Employee Name</th>
 								<th scope="col">Phone Number</th>
-								<th scope="col">Twitter</th>
+								<th scope="col">Title</th>
+								<th scope="col">Salary</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
+							<% for (let i = 0; i < employees.length; i++) { %>
 							<tr>
-								<th scope="row">1</th>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
+								<td><%= employees[i].emp_id %></td>
+								<td><%= employees[i].emp_name %></td>
+								<td><%= employees[i].phone_num %></td>
+								<td><%= employees[i].title %></td>
+								<td><%= employees[i].salary %></td>
 								<td>
-									<button type="button" class="btn btn-danger">Fire</button>
+									<button
+										type="button"
+										class="btn btn-danger"
+										onclick="fireEmployee('<%= employees[i].emp_id %>')"
+									>
+										Fire
+									</button>
 								</td>
 							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>Jacob</td>
-								<td>Thornton</td>
-								<td>@fat</td>
-								<td>
-									<button type="button" class="btn btn-danger">Fire</button>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>Larry</td>
-								<td>the Bird</td>
-								<td>@twitter</td>
-								<td>
-									<button type="button" class="btn btn-danger">Fire</button>
-								</td>
-							</tr>
+							<% } %>
 						</tbody>
 					</table>
+
+					<h1>Add Employee:</h1>
+					<% if (msg) {%>
+					<div class="alert alert-success" role="alert"><%= msg %></div>
+					<% } %>
+
+					<div class="card" style="width: 50%">
+						<div class="card-body">
+							<form action="/api/employee" method="POST">
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<label for="inputEmail4">Name</label>
+										<input
+											type="text"
+											class="form-control"
+											id="inputEmail4"
+											placeholder="Name"
+											required
+											name="employeeName"
+										/>
+									</div>
+									<div class="form-group col-md-6">
+										<label for="inputPassword4">Phone number</label>
+										<input
+											type="text"
+											class="form-control"
+											id="inputPassword4"
+											placeholder="Phone number"
+											required
+											name="employeePhonenum"
+										/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputAddress">Title</label>
+									<select id="inputState" class="form-control" name="title">
+										<option>Barista</option>
+										<option>clerk</option>
+										<option>accountant</option>
+										<option>secretary</option>
+										<option>recruiter</option>
+									</select>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<label for="inputCity">Salary</label>
+										<input
+											type="number"
+											class="form-control"
+											id="inputCity"
+											name="salary"
+											placeholder="Salary"
+										/>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="inputState">Department</label>
+										<select
+											id="inputState"
+											class="form-control"
+											name="department"
+										>
+											<option>Coffee House</option>
+											<option>finance</option>
+											<option>cleaning</option>
+											<option>sales</option>
+											<option>human resources</option>
+										</select>
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-success">
+									Add Employee
+								</button>
+							</form>
+						</div>
+					</div>
 				</main>
 			</div>
 		</div>
@@ -339,17 +417,28 @@
 		<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 		<script async defer src="https://buttons.github.io/buttons.js"></script>
 		<script>
-			new Chartist.Line(
-				"#traffic-chart",
-				{
-					labels: ["January", "Februrary", "March", "April", "May", "June"],
-					series: [[23000, 25000, 19000, 34000, 56000, 64000]],
-				},
-				{
-					low: 0,
-					showArea: true,
-				}
-			);
+			//Delete from branch menu
+			const fireEmployee = (emp_id) => {
+				fetch(`/api/employee/${emp_id}`, {
+					method: "DELETE",
+				})
+					.then(function (response) {
+						// The API call was successful!
+						if (response.ok) {
+							window.location.reload();
+							return response.json();
+						} else {
+							return Promise.reject(response);
+						}
+					})
+					.then(function (data) {
+						// This is the JSON from our response
+					})
+					.catch(function (err) {
+						// There was an error
+						console.warn("Something went wrong.", err);
+					});
+			};
 		</script>
 	</body>
 </html>
