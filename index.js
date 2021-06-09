@@ -1,10 +1,9 @@
-const { connect } = require("http2");
-
 const express = require("express"),
 	session = require("express-session"),
 	sha1 = require("sha1"),
 	mysql = require("mysql"),
 	app = express(),
+	moment = require("moment"),
 	middlewareObj = require("./middleware");
 
 // App settings
@@ -59,6 +58,13 @@ app.get("/", (req, res) => {
 app.post("/login", (req, res) => {
 	const exec_id = req.body.executive_id;
 	const exec_pass = req.body.password;
+	// Admin of Starbucks
+	if (exec_id === "admin" && sha1("admin") == sha1(exec_pass)) {
+		res.redirect("/admin");
+		return;
+	}
+
+	// Non admin (Managers)
 	const statement = `SELECT * FROM executive E, starbucks_chain S WHERE E.executive_id = ${exec_id} 
 						AND E.chain_id = S.chain_id`;
 	conn.query(statement, (err, result) => {
@@ -87,6 +93,85 @@ app.post("/login", (req, res) => {
 		res.redirect("/login");
 	});
 });
+
+app.post("/api/admin/bmgr", (req, res) => {
+	const { location, branch_name } = req.body;
+	let statement = "";
+	if (branch_name === "") {
+		statement = `SELECT * FROM executive E, starbucks_chain S 
+							WHERE E.chain_id = S.chain_id`;
+	} else {
+		statement = `SELECT * FROM executive E, starbucks_chain S 
+							WHERE E.chain_id = S.chain_id AND
+							S.chain_name = '${branch_name}'`;
+	}
+	conn.query(statement, (err, result) => {
+		result.push(location);
+		res.json(result);
+	});
+});
+// select * from department d, employee e, works_in w, starbucks_chain s where d.emp_id = e.emp_id
+// AND w.chain_id = s.chain_id AND w.emp_id = e.emp_id AND s.chain_name = 'New York';
+
+// app.post("/api/admin/dmgr", (req, res) => {
+// 	console.log(req.body);
+// 	const { department, branch_name } = req.body;
+// 	let statement = "";
+// 	if (branch_name === "") {
+// 		statement = `SELECT * FROM executive E, starbucks_chain S
+// 							WHERE E.chain_id = S.chain_id`;
+// 	} else {
+// 		statement = `SELECT * FROM executive E, starbucks_chain S
+// 							WHERE E.chain_id = S.chain_id AND
+// 							S.chain_name = '${branch_name}'`;
+// 	}
+// 	conn.query(statement, (err, result) => {
+// 		result.push(location);
+// 		res.json(result);
+// 	});
+// });
+
+app.post("/api/admin/cfac", (req, res) => {
+	const { branch_name } = req.body;
+	let statement = `select * from chain_facility f, starbucks_chain s where s.chain_name= '${branch_name}' AND f.chain_id = s.chain_id`;
+	conn.query(statement, (err, result) => {
+		res.json(result);
+	});
+});
+
+app.post("/api/admin/crat", (req, res) => {
+	const { branch_name } = req.body;
+	let statement = `select * from ratings r, starbucks_chain c where c.chain_name = '${branch_name}' AND r.chain_id = c.chain_id`;
+	conn.query(statement, (err, result) => {
+		console.log(result);
+		res.json(result);
+	});
+});
+
+// select * from department d, works_in w, starbucks_chain c where d.dept_id = w.dept_id AND c.chain_id = w.chain_id AND c.chain_name = 'new york'
+// mysql> select * from employee e,  department d, works_in w, starbucks_chain c where d.dept_id = w.dept_id AND c.chain_id = w.chain_id AND c.chain_name = 'new york' AND d.dept_name = 'Coffee House' AND e.emp_id = w.emp_id;
+app.post("/api/admin/gemp", (req, res) => {
+	const { branch_name, dept_name } = req.body;
+	let statement = `select * from department d, employee e, works_in w, starbucks_chain c where d.dept_id = w.dept_id AND c.chain_id = w.chain_id 
+					AND c.chain_name = '${branch_name}' AND d.dept_name = '${dept_name}' AND e.emp_id = w.emp_id`;
+	conn.query(statement, (err, result) => {
+		res.json(result);
+	});
+});
+
+app.post("/api/admin/gsal", (req, res) => {
+	const { branch_name, from, to } = req.body;
+	console.log(req.body);
+	const statement = `select * from main_menu m, order_hist_details D, order_hist H, starbucks_chain s, customer c WHERE
+H.chain_id = s.chain_id AND D.order_id = H.order_id AND c.cust_id = H.cust_id AND m.item_id = D.item_id AND s.chain_name = '${branch_name}'`;
+	conn.query(statement, (err, result) => {
+		console.log(err);
+		const order_details = result;
+		console.log(result);
+		res.json(result);
+	});
+});
+
 app.get("/login", (req, res) => {
 	if (req.session.loggedin) {
 		res.redirect("/dashboard");
@@ -108,9 +193,20 @@ app.get("/dashboard", middlewareObj.isLoggedIn, (req, res) => {
 		WHERE H.order_id = D.order_id AND D.item_id = N.item_id AND chain_id = ${chain_id}`;
 	conn.query(statement, (err, result) => {
 		const order_details = result;
-		console.log(order_details);
-		res.render("dashboard", { order_details: order_details });
+		const statement2 = `select count(*) AS c from order_hist where chain_id = ${chain_id} AND datediff(curdate(), order_hist.order_date) < 30;`;
+		conn.query(statement2, (err, result1) => {
+			const num_cust_last_month = result1;
+			res.render("dashboard", {
+				order_details: order_details,
+				cust_count: result1[0].c,
+			});
+		});
 	});
+});
+
+// app.get("/admin", middlewareObj.isLoggedIn, (req, res) => {
+app.get("/admin", (req, res) => {
+	res.render("admin.ejs");
 });
 
 app.get("/menu", (req, res) => {
@@ -184,9 +280,37 @@ app.get("/branch-menu", middlewareObj.isLoggedIn, (req, res) => {
 });
 
 app.get("/review", middlewareObj.isLoggedIn, (req, res) => {
-	res.render("review.ejs");
+	const branch_id = req.session.user.chain_id;
+	const statement = `select * from ratings R, customer C where C.cust_id = R.cust_id AND R.chain_id = ${branch_id}`;
+	conn.query(statement, (err, result) => {
+		console.log(err);
+		console.log(result);
+		let rating = 0;
+		let star_count = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+		for (let i = 0; i < result.length; i++) {
+			rating += result[i].rating / result.length;
+			star_count[result[i].rating] += 1;
+		}
+		console.log(star_count);
+		res.render("review.ejs", {
+			reviews: result,
+			rating: Math.ceil(rating),
+			star_count: star_count,
+		});
+	});
 });
 
+app.get("/cust-signup", (req, res) => {
+	res.render("cust-signup.ejs");
+});
+
+app.post("/api/cust-signup", (req, res) => {
+	const { customer_name, customer_id, phone_num } = req.body;
+	const statement = `INSERT INTO customer VALUES(${customer_id}, '${customer_name}', '${phone_num}')`;
+	conn.query(statement, (err, result) => {
+		res.redirect("/customer-review");
+	});
+});
 app.post("/api/menu/:item_id", middlewareObj.isLoggedIn, (req, res) => {
 	const chain_id = req.session.user.chain_id;
 	const item_id = req.params.item_id;
@@ -231,7 +355,6 @@ app.get("/sales", middlewareObj.isLoggedIn, (req, res) => {
 });
 
 app.post("/api/order", middlewareObj.isLoggedIn, (req, res) => {
-	console.log(req.body);
 	const order_id = sha1(new Date());
 	const chain_id = req.session.user.chain_id;
 	const customer_id = req.body.customer_id;
@@ -250,7 +373,6 @@ app.post("/api/order", middlewareObj.isLoggedIn, (req, res) => {
 });
 
 app.post("/api/employee", middlewareObj.isLoggedIn, (req, res) => {
-	console.log(req.body);
 	const emp_id = sha1(new Date());
 	const chain_id = req.session.user.chain_id;
 	const since = new Date().toISOString().slice(0, 19).replace("T", " ");
@@ -261,9 +383,7 @@ app.post("/api/employee", middlewareObj.isLoggedIn, (req, res) => {
 	const salary = req.body.salary;
 
 	const statement = `SELECT * FROM department WHERE chain_id = ${chain_id} AND dept_name = '${dept_name}'`;
-	console.log(statement);
 	conn.query(statement, (err, result) => {
-		console.log(result);
 		const dept_id = result[0].dept_id;
 		const statement1 = `INSERT INTO employee VALUES ('${emp_id}', '${name}', '${phone_num}')`;
 		conn.query(statement1, (err, result) => {
@@ -283,13 +403,31 @@ app.post("/api/employee", middlewareObj.isLoggedIn, (req, res) => {
 	});
 });
 
+app.get("/customer-review", (req, res) => {
+	res.render("cust-review.ejs");
+});
+
+app.post("/api/review", (req, res) => {
+	const { chain_id, customer_id, review, star } = req.body;
+	let statement1 = `INSERT INTO ratings VALUES (${customer_id}, ${chain_id}, ${star}, '${review}', '${new Date()
+		.toISOString()
+		.slice(0, 19)
+		.replace("T", " ")}' )`;
+	conn.query(statement1, (err, result) => {
+		console.log(err);
+		res.redirect("/customer-review");
+	});
+});
+
+app.get("/*", (req, res) => {
+	res.render("404.ejs");
+});
+
 // Using routes
 // app.use(questionRoute);
 // app.use(questionResponseRoute);
 // app.use(userRoute);
-app.get("/test", (req, res) => {
-	res.send(`${new Date()} <br> ${sha1(new Date())}`);
-});
+
 app.listen(app.get("port"), () => {
 	console.log(
 		`Backend Server has started at http://localhost:${app.get("port")}`

@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+
+header {
+	position: block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 4px 2px -2px gray;
+	margin-bottom: 50px;
+}
+
+header .logo {
+	position: relative;
+	max-width: 80px;
+}
+
+header ul {
+	position: relative;
+	display: flex;
+}
+
+header ul li {
+	list-style: none;
+}
+
+header ul li a {
+	display: inline-block;
+	color: #333;
+	font-weight: 400;
+	margin-left: 40px;
+	text-decoration: none;
+}
+
+.txt-center {
+	text-align: center;
+}
+.hide {
+	display: none;
+}
+
+.clear {
+	float: none;
+	clear: both;
+}
+
+.rating {
+	margin: 20px;
+	width: 90px;
+	unicode-bidi: bidi-override;
+	direction: rtl;
+	text-align: center;
+	position: relative;
+}
+
+.rating > label {
+	float: right;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	position: relative;
+	width: 1.1em;
+	cursor: pointer;
+	color: #000;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+	color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+	content: "\2605";
+	position: absolute;
+	left: 0;
+	color: #ffd700;
+}

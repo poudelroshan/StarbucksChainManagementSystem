@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Starbucks Admin Dashboard</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+			integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+			integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+		/>
+		<style>
+			.checked {
+				color: orange;
+			}
+			.logo {
+				height: 55px;
+				margin-left: 20px;
+			}
+			.body-item {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				/* align-items: center; */
+				margin: 50px;
+			}
+			hr {
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+				border: 0;
+				border-top: 5px solid green;
+			}
+		</style>
+		<style>
+			.sidebar {
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 100;
+				padding: 90px 0 0;
+				box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+				z-index: 99;
+			}
+
+			@media (max-width: 767.98px) {
+				.sidebar {
+					top: 11.5rem;
+					padding: 0;
+				}
+			}
+
+			.navbar {
+				box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+			}
+
+			@media (min-width: 767.98px) {
+				.navbar {
+					top: 0;
+					position: sticky;
+					z-index: 999;
+				}
+			}
+
+			.sidebar .nav-link {
+				color: #333;
+			}
+
+			.sidebar .nav-link.active {
+				color: #0d6efd;
+			}
+
+			#date-row {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+			}
+			.date-row-inside {
+				display: flex;
+				flex-direction: row;
+				padding-right: 50px;
+				margin-bottom: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-light bg-light p-3">
+			<div
+				class="
+					d-flex
+					col-12 col-md-3 col-lg-2
+					mb-2 mb-lg-0
+					flex-wrap flex-md-nowrap
+					justify-content-between
+				"
+			>
+				<!-- <a class="navbar-brand" href="#">Nabvar brand </a> -->
+				<a href="/" class="navbar-brand">
+					<img src="./images/logo.png" alt="Starbucks" class="logo" />
+					Admin Console
+				</a>
+				<button
+					class="navbar-toggler d-md-none collapsed mb-3"
+					type="button"
+					data-toggle="collapse"
+					data-target="#sidebar"
+					aria-controls="sidebar"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+			<div class="col-12 col-md-4 col-lg-2">
+				<input
+					class="form-control form-control-dark"
+					type="text"
+					placeholder="Search"
+					aria-label="Search"
+				/>
+			</div>
+			<div
+				class="
+					col-12 col-md-5 col-lg-8
+					d-flex
+					align-items-center
+					justify-content-md-end
+					mt-3 mt-md-0
+				"
+			>
+				<div class="dropdown">
+					<button
+						class="btn btn-secondary dropdown-toggle"
+						type="button"
+						id="dropdownMenuButton"
+						data-toggle="dropdown"
+						aria-expanded="false"
+					>
+						Hello Admin
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li><a class="dropdown-item" href="#">Settings</a></li>
+						<li><a class="dropdown-item" href="#">Messages</a></li>
+						<li><a class="dropdown-item" href="/logout">Sign out</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Content goes here -->
+
+		<!-- Branch Managers -->
+		<div class="body-item">
+			<div>
+				<h3>Show Info for Branch Managers:</h3>
+				ƒ
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name (optional)"
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						id="11"
+					/>
+				</div>
+				<button
+					type="button"
+					class="btn btn-primary"
+					onclick="findBranchManager()"
+				>
+					Show Results
+				</button>
+				<div id="1-res"></div>
+			</div>
+			<hr/ >
+			<div>
+				<h3>Show Info for Department Managers:</h3>
+				<select class="form-select" aria-label="Default select example" id="2">
+					<option selected>Department</option>
+					<option value="Coffee House">Coffee House</option>
+					<option value="finance">finance</option>
+					<option value="cleaning">cleaning</option>
+					<option value="sales">sales</option>
+					<option value="human resources">human resources</option>
+				</select>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name (optional)"
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						id="22"
+					/>
+				</div>
+				<button
+					type="button"
+					class="btn btn-primary"
+					onclick="findDeptManager()"
+				>
+					Show Results
+				</button>
+				<div id="2-res"></div>
+			</div>
+			<hr/ >
+			<div>
+				<h3>Show Info for Chain Facilities:</h3>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name* "
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						required
+						id="3"
+					/>
+				</div>
+				<button
+					type="button"
+					class="btn btn-primary"
+					onclick="findChainFacilities()"
+				>
+					Show Results
+				</button>
+				<div id="3-res"></div>
+			</div>
+			<hr/ >
+
+			<!-- Ratings -->
+			<div>
+				<h3>Show Info for Branch Ratings:</h3>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name"
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						id="4"
+					/>
+				</div>
+				<div id="date-row">
+					<div class="date-row-inside">
+						<label
+							for="example-date-input"
+							class="col-2 col-form-label"
+							style="margin-right: 50px"
+							>From:</label
+						>
+
+						<input
+							class="form-control"
+							type="date"
+							value="2021-02-19"
+							id="4f-date"
+						/>
+					</div>
+
+					<div class="date-row-inside">
+						<label
+							for="example-date-input"
+							class="col-2 col-form-label"
+							style="margin-right: 50px"
+							>To:</label
+						>
+						<input
+							class="form-control"
+							type="date"
+							value="2021-05-19"
+							id="4t-date"
+						/>
+					</div>
+				</div>
+
+				<button
+					type="button"
+					class="btn btn-primary"
+					onclick="findChainratings()"
+				>
+					Show Results
+				</button>
+
+				<div id="4-res"></div>
+			</div>
+			<hr/ >
+
+			<!-- Employees -->
+			<div>
+				<h3>Show Info for Employees:</h3>
+				<select class="form-select" aria-label="Default select example" id="5">
+					<option selected>Department</option>
+					<option value="Coffee House">Coffee House</option>
+					<option value="finance">finance</option>
+					<option value="cleaning">cleaning</option>
+					<option value="sales">sales</option>
+					<option value="human resources">human resources</option>
+				</select>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name"
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						id="55"
+					/>
+				</div>
+				<button type="button" class="btn btn-primary" onclick="getEmpResult()">
+					Show Results
+				</button>
+				<div id="5-res"></div>
+			</div>
+			<hr/ >
+
+			<!-- Sales -->
+			<div>
+				<h3>Show Info for Sales:</h3>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name"
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						id="6"
+					/>
+				</div>
+				<div id="date-row">
+					<div class="date-row-inside">
+						<label
+							for="example-date-input"
+							class="col-2 col-form-label"
+							style="margin-right: 50px"
+							>From:</label
+						>
+
+						<input
+							class="form-control"
+							type="date"
+							value="2021-02-19"
+							id="6f-date"
+						/>
+					</div>
+
+					<div class="date-row-inside">
+						<label
+							for="example-date-input"
+							class="col-2 col-form-label"
+							style="margin-right: 50px"
+							>To:</label
+						>
+						<input
+							class="form-control"
+							type="date"
+							value="2021-05-19"
+							id="6t-date"
+						/>
+					</div>
+				</div>
+
+				<button type="button" class="btn btn-primary" onclick="getSales()">
+					Show Results
+				</button>
+				<div id="6-res"></div>
+			</div>
+			<hr/ >
+
+			<!-- Customers -->
+			<div>
+				<h3>Show Customer Info:</h3>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">@</span>
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Branch Name"
+						aria-label="Branch Name"
+						aria-describedby="basic-addon1"
+						id="7"
+					/>
+				</div>
+				<button type="button" class="btn btn-primary" onclick="getCust()">
+					Show Results
+				</button>
+				<div id="7-res"></div>
+			</div>
+			<hr/ >
+		</div>
+	</body>
+	<script>
+		const findBranchManager = () => {
+			const location = document.getElementById("1").value;
+			const bName = document.getElementById("11").value;
+			toSend = { location: location, branch_name: bName };
+			fetch(`/api/admin/bmgr`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("1-res");
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col">Manager ID</th>
+								<th scope="col"> Chain Id</th>
+								<th scope="col"> Name</th>
+								<th scope="col">Chain Name</th>
+								<th scope="col">Phone Number</th>
+								<th scope="col">Email</th>
+								<th scope="col">Action</th>
+
+							</tr>
+						</thead>
+						<tbody>
+		                  `;
+					for (let i = 0; i < data.length - 1; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].executive_id}</td>
+								<td> ${data[i].chain_id}</td>
+								<td> ${data[i].exec_name}</td>
+								<td> ${data[i].chain_name}</td>
+								<td> ${data[i].phone_num}</td>
+								<td>${data[i].email} </td>
+								<td>
+									<button
+										type="button"
+										class="btn btn-danger"
+									>
+										Fire
+									</button>
+								</td>
+							</tr>`;
+					}
+					htmlstring += `</tbody>
+					</table>`;
+					nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+		const findDeptManager = () => {
+			const department = document.getElementById("2").value;
+			const bName = document.getElementById("22").value;
+			toSend = { department: department, branch_name: bName };
+			fetch(`/api/admin/dmgr`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("2-res");
+					console.log(data);
+					// let htmlstring = `
+					// <table class="table table-hover">
+					// 	<thead>
+					// 		<tr class="bg-success">
+					// 			<th scope="col">Manager ID</th>
+					// 			<th scope="col"> Chain Id</th>
+					// 			<th scope="col"> Name</th>
+					// 			<th scope="col">Chain Name</th>
+					// 			<th scope="col">Phone Number</th>
+					// 			<th scope="col">Email</th>
+					// 			<th scope="col">Action</th>
+
+					// 		</tr>
+					// 	</thead>
+					// 	<tbody>
+					// `;
+					// for (let i = 0; i < data.length - 1; i++) {
+					// 	htmlstring += `<tr>
+					// 			<td> ${data[i].executive_id}</td>
+					// 			<td> ${data[i].chain_id}</td>
+					// 			<td> ${data[i].exec_name}</td>
+					// 			<td> ${data[i].chain_name}</td>
+					// 			<td> ${data[i].phone_num}</td>
+					// 			<td>${data[i].email} </td>
+					// 			<td>
+					// 				<button
+					// 					type="button"
+					// 					class="btn btn-danger"
+					// 				>
+					// 					Fire
+					// 				</button>
+					// 			</td>
+					// 		</tr>`;
+					// }
+					// htmlstring += `</tbody>
+					// </table>`;
+					// nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+
+		const findChainFacilities = () => {
+			const bName = document.getElementById("3").value;
+			toSend = { branch_name: bName };
+			fetch(`/api/admin/cfac`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("3-res");
+
+					console.log(data);
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col"> Chain Id</th>
+								<th scope="col">Chain Name</th>
+								<th scope="col"> Drive Through</th>
+								<th scope="col">Has Parking</th>
+								<th scope="col">Wheelchair Accessible</th>
+								<th scope="col">WIFI</th>
+								<th scope="col">Wireless Charging</th>
+							</tr>
+						</thead>
+						<tbody>
+					`;
+					for (let i = 0; i < data.length; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].chain_id}</td>
+								<td> ${data[i].chain_name}</td>
+
+								<td > ${
+									data[i].drive_through == 1
+										? '<i class="bi bi-check fa-2x"></i>'
+										: '<i class="bi bi-x fa-2x"></i>'
+								}</td>
+								<td> ${
+									data[i].has_parking == 1
+										? '<i class="bi bi-check fa-2x"></i>'
+										: '<i class="bi bi-x fa-2x"></i>'
+								}</td>
+								<td> ${
+									data[i].wheelchair_accessible == 1
+										? '<i class="bi bi-check fa-2x"></i>'
+										: '<i class="bi bi-x fa-2x"></i>'
+								}</td>
+								<td>${
+									data[i].WIFI == 1
+										? '<i class="bi bi-check fa-2x"></i>'
+										: '<i class="bi bi-x fa-2x"></i>'
+								} </td>
+								<td>${
+									data[i].wireless_charging == 1
+										? '<i class="bi bi-check fa-2x"></i>'
+										: '<i class="bi bi-x fa-2x"></i>'
+								} </td>
+							</tr>`;
+					}
+					htmlstring += `</tbody></table>`;
+
+					nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+		const findChainratings = () => {
+			const bName = document.getElementById("4").value;
+			const from = document.getElementById("4f-date").value;
+			const to = document.getElementById("4t-date").value;
+			toSend = { branch_name: bName, from: from, to: to };
+			fetch(`/api/admin/crat`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("4-res");
+
+					console.log(data);
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col">Date</th>
+								<th scope="col"> Customer Id</th>
+								<th scope="col">Rating</th>
+								<th scope="col"> Review</th>
+							</tr>
+						</thead>
+						<tbody>
+					`;
+					for (let i = 0; i < data.length; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].review_date}</td>
+								<td> ${data[i].cust_id}</td>
+								<td> ${data[i].rating}</td>
+								<td> ${data[i].review}</td>
+							</tr>`;
+					}
+					htmlstring += `</tbody></table>`;
+
+					nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+
+		const getEmpResult = () => {
+			const bName = document.getElementById("55").value;
+			const dept = document.getElementById("5").value;
+			toSend = { branch_name: bName, dept_name: dept };
+			fetch(`/api/admin/gemp`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("5-res");
+
+					console.log(data);
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col">Employee Id</th>
+								<th scope="col"> Employee Name</th>
+								<th scope="col">Phone Number</th>
+								<th scope="col">Salary </th>
+								<th scope="col">Action </th>
+							</tr>
+						</thead>
+						<tbody>
+					`;
+					for (let i = 0; i < data.length; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].emp_id}</td>
+								<td> ${data[i].emp_name}</td>
+								<td> ${data[i].phone_num}</td>
+								<td> ${data[i].salary}</td>
+								<td>
+									<button
+										type="button"
+										class="btn btn-danger"
+									>
+										Fire
+									</button>
+								</td>
+							</tr>`;
+					}
+					htmlstring += `</tbody></table>`;
+
+					nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+
+		const getSales = () => {
+			const bName = document.getElementById("6").value;
+			const from = document.getElementById("6f-date").value;
+			const to = document.getElementById("6t-date").value;
+			toSend = { branch_name: bName, from: from, to: to };
+			fetch(`/api/admin/gsal`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("6-res");
+
+					console.log(data);
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col">Order Date</th>
+								<th scope="col">Customer Name </th>
+								<th scope="col"> Item Name</th>
+								<th scope="col"> Item Quantity</th>
+								<th scope="col">Item Photo </th>
+								<th scope="col">Total Price</th>
+
+							</tr>
+						</thead>
+						<tbody>
+					`;
+					for (let i = 0; i < data.length; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].order_date}</td>
+								<td> ${data[i].cust_name}</td>
+								<td> ${data[i].item_name}</td>
+								<td> ${data[i].item_quantity}</td>
+								<td> <img src="${data[i].item_url}"></td>
+								<td> $${data[i].item_quantity * data[i].item_price}</td>
+							</tr>`;
+					}
+					htmlstring += `</tbody></table>`;
+
+					nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+
+		const getCust = () => {
+			const bName = document.getElementById("7").value;
+			toSend = { branch_name: bName };
+			fetch(`/api/admin/gsal`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(toSend),
+			})
+				.then(function (response) {
+					// The API call was successful!
+					return response.json();
+				})
+				.then(function (data) {
+					// This is the JSON from our response
+					const nodeToAddTo = document.getElementById("7-res");
+
+					console.log(data);
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col">Customer Id </th>
+								<th scope="col">Customer Name </th>
+								<th scope="col"> Phone Number</th>
+							</tr>
+						</thead>
+						<tbody>
+					`;
+					for (let i = 0; i < data.length; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].cust_id}</td>
+								<td> ${data[i].cust_name}</td>
+								<td> ${data[i].phone_num}</td>
+							</tr>`;
+					}
+					htmlstring += `</tbody></table>`;
+
+					nodeToAddTo.innerHTML = htmlstring;
+				})
+				.catch(function (err) {
+					// There was an error
+					console.warn("Something went wrong.", err);
+				});
+		};
+	</script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"
+	></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+		integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+		crossorigin="anonymous"
+	></script>
+	<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+</html>

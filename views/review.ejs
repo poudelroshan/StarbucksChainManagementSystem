@@ -303,7 +303,7 @@
 						data-toggle="dropdown"
 						aria-expanded="false"
 					>
-						Hello, User
+						Branch: <%= user.chain_name %>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<li><a class="dropdown-item" href="#">Settings</a></li>
@@ -471,15 +471,18 @@
 						<div class="row justify-content-left d-flex" id="thisone">
 							<div class="col-md-4 d-flex flex-column">
 								<div class="rating-box">
-									<h1 class="pt-4 make_inline">4.0</h1>
+									<h1 class="pt-4 make_inline"><%= rating %></h1>
 									<p class="make_inline">out of 5</p>
 
 									<div class="make_inline">
+										<% for (let i = 0; i < rating; i++) { %>
+
 										<span class="fa fa-star star-active mx-1"></span>
-										<span class="fa fa-star star-active mx-1"></span>
-										<span class="fa fa-star star-active mx-1"></span>
-										<span class="fa fa-star star-active mx-1"></span>
+
+										<% } %> <% for (let i = 0; i < 5-rating; i++) { %>
+
 										<span class="fa fa-star star-inactive mx-1"></span>
+										<% } %>
 									</div>
 								</div>
 							</div>
@@ -490,46 +493,101 @@
 											<td class="rating-label">Excellent</td>
 											<td class="rating-bar">
 												<div class="bar-container">
-													<div class="bar-5"></div>
+													<div
+														class="
+															bar-<%=
+															Math.ceil(star_count[5]/reviews.length*5)
+															==
+															0
+															?
+															1
+															:Math.ceil(star_count[5]/reviews.length*5)
+															%>
+														"
+													></div>
 												</div>
 											</td>
-											<td class="text-right">123</td>
+											<td class="text-right"><%= star_count[5]%></td>
 										</tr>
 										<tr>
 											<td class="rating-label">Good</td>
 											<td class="rating-bar">
 												<div class="bar-container">
-													<div class="bar-4"></div>
+													<div
+														class="
+															bar-<%=
+															Math.ceil(star_count[4]/reviews.length*5)
+															==
+															0
+															?
+															1
+															:Math.ceil(star_count[4]/reviews.length*5)
+															%>
+														"
+													></div>
 												</div>
 											</td>
-											<td class="text-right">23</td>
+											<td class="text-right"><%= star_count[4]%></td>
 										</tr>
 										<tr>
 											<td class="rating-label">Average</td>
 											<td class="rating-bar">
 												<div class="bar-container">
-													<div class="bar-3"></div>
+													<div
+														class="
+															bar-<%=
+															Math.ceil(star_count[3]/reviews.length*5)
+															==
+															0
+															?
+															1
+															:Math.ceil(star_count[3]/reviews.length*5)
+															%>
+														"
+													></div>
 												</div>
 											</td>
-											<td class="text-right">10</td>
+											<td class="text-right"><%= star_count[3]%></td>
 										</tr>
 										<tr>
 											<td class="rating-label">Poor</td>
 											<td class="rating-bar">
 												<div class="bar-container">
-													<div class="bar-2"></div>
+													<div
+														class="
+															bar-<%=
+															Math.ceil(star_count[2]/reviews.length*5)
+															==
+															0
+															?
+															1
+															:Math.ceil(star_count[2]/reviews.length*5)
+															%>
+														"
+													></div>
 												</div>
 											</td>
-											<td class="text-right">3</td>
+											<td class="text-right"><%= star_count[2]%></td>
 										</tr>
 										<tr>
 											<td class="rating-label">Terrible</td>
 											<td class="rating-bar">
 												<div class="bar-container">
-													<div class="bar-1"></div>
+													<div
+														class="
+															bar-<%=
+															Math.ceil(star_count[1]/reviews.length*5)
+															==
+															0
+															?
+															1
+															:Math.ceil(star_count[1]/reviews.length*5)
+															%>
+														"
+													></div>
 												</div>
 											</td>
-											<td class="text-right">0</td>
+											<td class="text-right"><%= star_count[1]%></td>
 										</tr>
 									</table>
 								</div>
@@ -540,47 +598,30 @@
 
 				<div class="container">
 					<main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-						<div>
-							<div class="card items_container">
-								<h5 class="card-header">Roshan Poudel</h5>
-								<div class="card-body">
-									<div class="smth-wemde">
-										<h5 class="card-title">
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</h5>
-										<p class="card-text text-success">Feb 1 2021</p>
-									</div>
-									<p class="card-text">
-										This is the commentThis is the commentThis is the
-										commentThis is the comment
-									</p>
-								</div>
-							</div>
+						<% for (let i = 0; i < reviews.length; i++) { %>
+						<div class="card items_container">
+							<h5 class="card-header"><%= reviews[i].cust_name %></h5>
+							<div class="card-body">
+								<div class="smth-wemde">
+									<h5 class="card-title">
+										<% for (let j = 0; j < reviews[i].rating; j++) { %>
 
-							<div class="card items_container">
-								<h5 class="card-header">Roshan Poudel</h5>
-								<div class="card-body">
-									<div class="smth-wemde">
-										<h5 class="card-title">
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star checked"></span>
-											<span class="fa fa-star"></span>
-											<span class="fa fa-star"></span>
-										</h5>
-										<p class="card-text text-success">Feb 1 2021</p>
-									</div>
-									<p class="card-text">
-										This is the commentThis is the commentThis is the
-										commentThis is the comment
+										<span class="fa fa-star star-active mx-1"></span>
+
+										<% } %> <% for (let j = 0; j < 5 - reviews[i].rating; j++) {
+										%>
+
+										<span class="fa fa-star star-inactive mx-1"></span>
+										<% } %>
+									</h5>
+									<p class="card-text text-success">
+										<%= reviews[i].review_date %>
 									</p>
 								</div>
+								<p class="card-text"><%= reviews[i].review %></p>
 							</div>
 						</div>
+						<% } %>
 					</main>
 				</div>
 			</div>
