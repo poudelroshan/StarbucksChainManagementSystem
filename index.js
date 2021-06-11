@@ -116,7 +116,6 @@ app.post("/api/admin/bmgr", (req, res) => {
 //select * from department D, employee E where D.dept_name = 'finance' AND D.mgr_id = E.emp_id;
 //select * from starbucks_chain C, department D, employee E, works_in W where D.dept_name = 'finance' AND D.dept_id = W.dept_id AND
 //D.mgr_id = E.emp_id AND D.mgr_id = W.emp_id AND W.chain_id = C.chain_id;
-
 app.post("/api/admin/dmgr", (req, res) => {
 	const { department, branch_name } = req.body;
 	let statement = "";
@@ -128,6 +127,8 @@ app.post("/api/admin/dmgr", (req, res) => {
 					D.dept_id = W.dept_id AND D.mgr_id = E.emp_id AND D.mgr_id = W.emp_id AND W.chain_id = C.chain_id AND C.chain_name = '${branch_name}'`;
 	}
 	conn.query(statement, (err, result) => {
+		console.log(err);
+		console.log(result);
 		res.json(result);
 	});
 });
