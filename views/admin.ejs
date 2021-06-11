@@ -174,7 +174,12 @@
 		<div class="body-item">
 			<div>
 				<h3>Show Info for Branch Managers:</h3>
-				ƒ
+				<select class="form-select" aria-label="Default select example" id="1">
+					<option selected>Location</option>
+					<option value="East Coast">East Coast</option>
+					<option value="West Coast">West Coast</option>
+					<option value="International">International</option>
+				</select>
 				<div class="input-group mb-3">
 					<span class="input-group-text" id="basic-addon1">@</span>
 					<input
@@ -493,43 +498,43 @@
 					// This is the JSON from our response
 					const nodeToAddTo = document.getElementById("2-res");
 					console.log(data);
-					// let htmlstring = `
-					// <table class="table table-hover">
-					// 	<thead>
-					// 		<tr class="bg-success">
-					// 			<th scope="col">Manager ID</th>
-					// 			<th scope="col"> Chain Id</th>
-					// 			<th scope="col"> Name</th>
-					// 			<th scope="col">Chain Name</th>
-					// 			<th scope="col">Phone Number</th>
-					// 			<th scope="col">Email</th>
-					// 			<th scope="col">Action</th>
+					let htmlstring = `
+					<table class="table table-hover">
+						<thead>
+							<tr class="bg-success">
+								<th scope="col"> Chain Id</th>
+								<th scope="col"> Chain Name</th>
+								<th scope="col">Manager Name</th>
+								<th scope="col">Phone Number</th>
+								<th scope="col">Salary</th>
+								<th scope="col">Working Since</th>
+								<th scope="col">Action</th>
 
-					// 		</tr>
-					// 	</thead>
-					// 	<tbody>
-					// `;
-					// for (let i = 0; i < data.length - 1; i++) {
-					// 	htmlstring += `<tr>
-					// 			<td> ${data[i].executive_id}</td>
-					// 			<td> ${data[i].chain_id}</td>
-					// 			<td> ${data[i].exec_name}</td>
-					// 			<td> ${data[i].chain_name}</td>
-					// 			<td> ${data[i].phone_num}</td>
-					// 			<td>${data[i].email} </td>
-					// 			<td>
-					// 				<button
-					// 					type="button"
-					// 					class="btn btn-danger"
-					// 				>
-					// 					Fire
-					// 				</button>
-					// 			</td>
-					// 		</tr>`;
-					// }
-					// htmlstring += `</tbody>
-					// </table>`;
-					// nodeToAddTo.innerHTML = htmlstring;
+							</tr>
+						</thead>
+						<tbody>
+					`;
+					for (let i = 0; i < data.length; i++) {
+						htmlstring += `<tr>
+								<td> ${data[i].chain_id}</td>
+								<td> ${data[i].chain_name}</td>
+								<td> ${data[i].emp_name}</td>
+								<td> ${data[i].phone_num}</td>
+								<td> $ ${data[i].salary}</td>
+								<td>${data[i].since} </td>
+								<td>
+									<button
+										type="button"
+										class="btn btn-danger"
+									>
+										Fire
+									</button>
+								</td>
+							</tr>`;
+					}
+					htmlstring += `</tbody>
+					</table>`;
+					nodeToAddTo.innerHTML = htmlstring;
 				})
 				.catch(function (err) {
 					// There was an error

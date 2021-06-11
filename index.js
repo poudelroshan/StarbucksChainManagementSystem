@@ -60,6 +60,7 @@ app.post("/login", (req, res) => {
 	const exec_pass = req.body.password;
 	// Admin of Starbucks
 	if (exec_id === "admin" && sha1("admin") == sha1(exec_pass)) {
+		req.session.loggedin = true;
 		res.redirect("/admin");
 		return;
 	}
@@ -112,24 +113,24 @@ app.post("/api/admin/bmgr", (req, res) => {
 });
 // select * from department d, employee e, works_in w, starbucks_chain s where d.emp_id = e.emp_id
 // AND w.chain_id = s.chain_id AND w.emp_id = e.emp_id AND s.chain_name = 'New York';
+//select * from department D, employee E where D.dept_name = 'finance' AND D.mgr_id = E.emp_id;
+//select * from starbucks_chain C, department D, employee E, works_in W where D.dept_name = 'finance' AND D.dept_id = W.dept_id AND
+//D.mgr_id = E.emp_id AND D.mgr_id = W.emp_id AND W.chain_id = C.chain_id;
 
-// app.post("/api/admin/dmgr", (req, res) => {
-// 	console.log(req.body);
-// 	const { department, branch_name } = req.body;
-// 	let statement = "";
-// 	if (branch_name === "") {
-// 		statement = `SELECT * FROM executive E, starbucks_chain S
-// 							WHERE E.chain_id = S.chain_id`;
-// 	} else {
-// 		statement = `SELECT * FROM executive E, starbucks_chain S
-// 							WHERE E.chain_id = S.chain_id AND
-// 							S.chain_name = '${branch_name}'`;
-// 	}
-// 	conn.query(statement, (err, result) => {
-// 		result.push(location);
-// 		res.json(result);
-// 	});
-// });
+app.post("/api/admin/dmgr", (req, res) => {
+	const { department, branch_name } = req.body;
+	let statement = "";
+	if (branch_name === "") {
+		statement = `select * from starbucks_chain C, department D, employee E, works_in W where D.dept_name = '${department}' AND 
+					D.dept_id = W.dept_id AND D.mgr_id = E.emp_id AND D.mgr_id = W.emp_id AND W.chain_id = C.chain_id`;
+	} else {
+		statement = `select * from starbucks_chain C, department D, employee E, works_in W where D.dept_name = '${department}' AND 
+					D.dept_id = W.dept_id AND D.mgr_id = E.emp_id AND D.mgr_id = W.emp_id AND W.chain_id = C.chain_id AND C.chain_name = '${branch_name}'`;
+	}
+	conn.query(statement, (err, result) => {
+		res.json(result);
+	});
+});
 
 app.post("/api/admin/cfac", (req, res) => {
 	const { branch_name } = req.body;
@@ -205,7 +206,7 @@ app.get("/dashboard", middlewareObj.isLoggedIn, (req, res) => {
 });
 
 // app.get("/admin", middlewareObj.isLoggedIn, (req, res) => {
-app.get("/admin", (req, res) => {
+app.get("/admin", middlewareObj.isLoggedIn, (req, res) => {
 	res.render("admin.ejs");
 });
 
